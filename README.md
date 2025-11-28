@@ -347,6 +347,8 @@ Quando os argumentos são inválidos (ex.: SWIPE com poucos parâmetros):
 {"ok": false, "error": "invalid_arguments"}
 ```
 
+---
+
 ### Voce pode achar o .apk no Realeses
 
 ### Ou pode fazer seu propio build
