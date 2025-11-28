@@ -149,3 +149,70 @@ Resposta (falha):
 {"ok": false, "error": "node_not_found"}
 ```
 
+### 4. FIND_ID
+Comando: FIND_ID <view_id>
+
+Descrição: Procura um node pelo viewIdResourceName exato (o campo view_id que aparece no DUMP).
+
+Resposta (encontrou):
+```json
+{
+  "found": true,
+  "node": {
+    "text": "",
+    "content_desc": "",
+    "view_id": "com.example.app:id/username_input",
+    "class_name": "android.widget.EditText",
+    "package_name": "com.example.app",
+    "clickable": true,
+    "enabled": true,
+    "focusable": true,
+    "checked": false,
+    "editable": true,
+    "bounds": { "left": 16, "top": 127, "right": 397, "bottom": 175 },
+    "children": []
+  }
+}
+```
+Resposta (não encontrou):
+```json
+{"found": false}
+```
+
+### 5. CLICK_ID
+Comando: CLICK_ID <view_id>
+
+Descrição: Procura um node pelo view_id e envia um clique no centro.
+
+Resposta (sucesso):
+```json
+{"ok": true, "x": 206, "y": 368}
+```
+Resposta (falha):
+```json
+{"ok": false, "error": "node_not_found"}
+```
+
+### 6. SET_TEXT_ID
+Comando: SET_TEXT_ID <view_id> <texto>
+
+Descrição: Define o texto de um campo (EditText) identificado por view_id, usando a ação ACTION_SET_TEXT.
+
+Tudo após o primeiro espaço depois do view_id é considerado parte do <texto>.
+
+Exemplo:
+```sh
+printf 'SET_TEXT_ID com.example.app:id/username_input usuario@example.com\n' | nc 127.0.0.1 9001
+```
+Resposta (sucesso):
+```json
+{"ok": true}
+```
+Resposta (falhas):
+```json
+{"ok": false, "error": "node_not_found"}
+```
+ou
+```json
+{"ok": false, "error": "action_failed"}
+```
