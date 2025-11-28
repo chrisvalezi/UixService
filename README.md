@@ -2,13 +2,13 @@
 
 ## Visão geral
 
-**UixService** é um aplicativo Android que expõe a árvore de acessibilidade da tela atual e permite enviar comandos de automação **direto via shell**, sem precisar de Python, ADB externo escutando porta, nem app com UI.
+**UixService** é um aplicativo Android que expõe a árvore de acessibilidade da tela atual e permite enviar comandos de automação **direto via shell**, sem precisar de Python, servidor externo nem app com interface gráfica.
 
 Ele roda como um `AccessibilityService`, acompanha a tela ativa e abre um servidor TCP **local** em:
 
 - `127.0.0.1:9001` (apenas dentro do próprio Android / container)
 
-A partir daí, qualquer processo com acesso ao shell (ex.: Redroid, Termux, container com `adb shell`) pode:
+A partir daí, qualquer processo com acesso ao shell (ex.: container Android, Termux, `adb shell`, etc.) pode:
 
 - inspecionar a UI atual em formato **JSON**
 - localizar elementos por texto ou `viewId`
@@ -26,19 +26,19 @@ Tudo isso apenas mandando **uma linha de texto** por conexão TCP.
 
 Componentes principais:
 
-- `UixAccessibilityService`
-  - Serviço de acessibilidade responsável por:
-    - receber eventos de UI
-    - manter o último `rootInActiveWindow` em memória
-    - converter a árvore de `AccessibilityNodeInfo` para JSON
-    - executar gestos (clique e swipe)
+- `UixAccessibilityService`  
+  Serviço de acessibilidade responsável por:
+  - receber eventos de UI
+  - manter o último `rootInActiveWindow` em memória
+  - converter a árvore de `AccessibilityNodeInfo` para JSON
+  - executar gestos (clique e swipe)
 
-- `CommandServer`
-  - Servidor TCP embutido no app:
-    - escuta em `127.0.0.1:9001`
-    - lê uma linha de comando por conexão (`DUMP`, `CLICK_ID`, etc.)
-    - executa a ação correspondente usando o `UixAccessibilityService`
-    - responde sempre em **JSON**, em uma única linha
+- `CommandServer`  
+  Servidor TCP embutido no app, responsável por:
+  - escutar em `127.0.0.1:9001`
+  - ler uma linha de comando por conexão (`DUMP`, `CLICK_ID`, etc.)
+  - executar a ação correspondente usando o `UixAccessibilityService`
+  - responder sempre em **JSON**, em uma única linha
 
 Fluxo simplificado:
 
@@ -49,14 +49,14 @@ Fluxo simplificado:
 
 ---
 
-## Protocolo / Usage rápido
+## Protocolo / Usage
 
 ### Conexão
 
-- Protocolo: TCP
-- Host: `127.0.0.1`
-- Porta: `9001`
-- Formato: **1 comando por conexão**, 1 linha de texto, resposta em 1 linha JSON
+- Protocolo: TCP  
+- Host: `127.0.0.1`  
+- Porta: `9001`  
+- Formato: **1 comando por conexão**, 1 linha de texto (terminada com `\n`), resposta em 1 linha JSON.
 
 Exemplos usando `nc` (dentro do Android):
 
@@ -68,4 +68,5 @@ printf 'DUMP\n' | nc 127.0.0.1 9001
 printf 'CLICK_TEXT Entrar\n' | nc 127.0.0.1 9001
 
 # Digitar em um campo pelo viewId
-printf 'SET_TEXT_ID com.spotify.music:id/username_text meuemail@teste.com\n' | nc 127.0.0.1 9001
+printf 'SET_TEXT_ID com.example.app:id/username_input usuario@example.com\n' | nc 127.0.0.1 9001
+
