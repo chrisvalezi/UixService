@@ -63,6 +63,7 @@ Exemplos usando `nc` (dentro do Android):
 ```sh
 # Dump completo da tela atual
 printf 'DUMP\n' | nc 127.0.0.1 9001
+printf 'DUMP\n' | nc 127.0.0.1 9001 | jq .
 
 # Clicar em um botão pelo texto visível
 printf 'CLICK_TEXT Entrar\n' | nc 127.0.0.1 9001
