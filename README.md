@@ -69,4 +69,28 @@ printf 'CLICK_TEXT Entrar\n' | nc 127.0.0.1 9001
 
 # Digitar em um campo pelo viewId
 printf 'SET_TEXT_ID com.example.app:id/username_input usuario@example.com\n' | nc 127.0.0.1 9001
+```
+---
+
+## Comandos suportados
+### 1. DUMP
+Descrição:
+Retorna a árvore completa de acessibilidade da tela atual.
+Resposta (exemplo simplificado):
+```json
+{
+  "text": "",
+  "content_desc": "",
+  "view_id": "",
+  "class_name": "android.widget.FrameLayout",
+  "package_name": "com.example.app",
+  "clickable": false,
+  "enabled": true,
+  "focusable": false,
+  "checked": false,
+  "editable": false,
+  "bounds": { "left": 0, "top": 0, "right": 413, "bottom": 693 },
+  "children": [ ... ]
+}
+```
 
