@@ -93,4 +93,41 @@ Resposta (exemplo simplificado):
   "children": [ ... ]
 }
 ```
+Cada nó contém pelo menos:
 
+text
+content_desc
+view_id
+class_name
+package_name
+clickable, enabled, focusable, checked, editable
+bounds (left, top, right, bottom)
+children (lista de nós filhos)
+
+### 1. FIND_TEXT
+Comando: FIND_TEXT <texto>
+Descrição: Procura o primeiro node cujo text ou content_desc contenha <texto> (case-insensitive).
+Resposta (encontrou):
+```json
+{
+  "found": true,
+  "node": {
+    "text": "Entrar",
+    "content_desc": "",
+    "view_id": "com.example.app:id/login_button",
+    "class_name": "android.widget.Button",
+    "package_name": "com.example.app",
+    "clickable": true,
+    "enabled": true,
+    "focusable": true,
+    "checked": false,
+    "editable": false,
+    "bounds": { "left": 151, "top": 348, "right": 262, "bottom": 389 },
+    "children": []
+  }
+}
+```
+Resposta (não encontrou):
+```json
+{"found": false}
+```
