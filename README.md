@@ -105,8 +105,10 @@ bounds (left, top, right, bottom)
 children (lista de nós filhos)
 
 ### 2. FIND_TEXT
-Comando: FIND_TEXT <texto>
-
+Comando: 
+```text
+FIND_TEXT <texto>
+```
 Descrição: Procura o primeiro node cujo text ou content_desc contenha <texto> (case-insensitive).
 
 Resposta (encontrou):
@@ -134,8 +136,10 @@ Resposta (não encontrou):
 {"found": false}
 ```
 ### 3. CLICK_TEXT
-Comando: CLICK_TEXT <texto>
-
+Comando: 
+```text
+CLICK_TEXT <texto>
+```
 Descrição: Procura um node por text/content_desc e envia um clique (gesto) no centro do seu bounding box.
 
 Resposta (sucesso):
@@ -150,8 +154,10 @@ Resposta (falha):
 ```
 
 ### 4. FIND_ID
-Comando: FIND_ID <view_id>
-
+Comando: 
+```text
+FIND_ID <view_id>
+```
 Descrição: Procura um node pelo viewIdResourceName exato (o campo view_id que aparece no DUMP).
 
 Resposta (encontrou):
@@ -180,8 +186,10 @@ Resposta (não encontrou):
 ```
 
 ### 5. CLICK_ID
-Comando: CLICK_ID <view_id>
-
+Comando: 
+```text
+CLICK_ID <view_id>
+```
 Descrição: Procura um node pelo view_id e envia um clique no centro.
 
 Resposta (sucesso):
@@ -194,8 +202,10 @@ Resposta (falha):
 ```
 
 ### 6. SET_TEXT_ID
-Comando: SET_TEXT_ID <view_id> <texto>
-
+Comando: 
+```text
+SET_TEXT_ID <view_id> <texto>
+```
 Descrição: Define o texto de um campo (EditText) identificado por view_id, usando a ação ACTION_SET_TEXT.
 
 Tudo após o primeiro espaço depois do view_id é considerado parte do <texto>.
@@ -216,3 +226,129 @@ ou
 ```json
 {"ok": false, "error": "action_failed"}
 ```
+
+### 7. GLOBAL
+Comando: 
+```text
+GLOBAL <ação>
+```
+Ações suportadas:
+
+BACK
+
+HOME
+
+RECENTS
+
+NOTIFICATIONS
+
+QUICK_SETTINGS
+
+Exemplos:
+```sh
+printf 'GLOBAL BACK\n' | nc 127.0.0.1 9001
+printf 'GLOBAL HOME\n' | nc 127.0.0.1 9001
+```
+Resposta (sucesso):
+```json
+{"ok": true, "action": "BACK"}
+```
+Resposta (erro):
+```json
+{"ok": false, "error": "unknown_global_action"}
+```
+
+### 8. SWIPE
+Comando: 
+```text
+SWIPE x1 y1 x2 y2 [durationMs]
+```
+x1, y1: coordenadas iniciais
+
+x2, y2: coordenadas finais
+
+durationMs: duração opcional do gesto em milissegundos (default ~300ms)
+
+Exemplo:
+```sh
+printf 'SWIPE 200 600 200 200 300\n' | nc 127.0.0.1 9001
+```
+Resposta:
+```json
+{
+  "ok": true,
+  "x1": 200,
+  "y1": 600,
+  "x2": 200,
+  "y2": 200,
+  "duration": 300
+}
+```
+Se os argumentos forem inválidos:
+
+```json
+{"ok": false, "error": "invalid_arguments"}
+```
+
+### 9. WAIT_TEXT
+
+Comando: 
+```text
+WAIT_TEXT <texto> <timeoutMs>
+```
+Descrição: Fica consultando a árvore de acessibilidade até encontrar <texto> ou até estourar <timeoutMs>.
+
+Exemplo:
+```sh
+printf 'WAIT_TEXT Entrar 10000\n' | nc 127.0.0.1 9001
+```
+Resposta (encontrou):
+```json
+{
+  "ok": true,
+  "node": { }
+}
+```
+Resposta (timeout):
+```json
+{"ok": false, "error": "timeout"}
+```
+
+### 10. WAIT_ID
+Comando:
+```text
+WAIT_ID <view_id> <timeoutMs>
+```
+Descrição: Idêntico ao WAIT_TEXT, mas usando o view_id exato.
+
+Exemplo:
+```sh
+printf 'WAIT_ID com.example.app:id/login_button 15000\n' | nc 127.0.0.1 9001
+```
+Resposta (encontrou):
+```json
+{
+  "ok": true,
+  "node": { }
+}
+```
+Resposta (timeout):
+```json
+{"ok": false, "error": "timeout"}
+```
+
+### 11. Respostas de erro genéricas
+Quando um comando não é reconhecido:
+```json
+{"ok": false, "error": "unknown_command"}
+```
+Quando os argumentos são inválidos (ex.: SWIPE com poucos parâmetros):
+```json
+{"ok": false, "error": "invalid_arguments"}
+```
+
+
+
+
+
+
