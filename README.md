@@ -74,8 +74,8 @@ printf 'SET_TEXT_ID com.example.app:id/username_input usuario@example.com\n' | n
 
 ## Comandos suportados
 ### 1. DUMP
-Descrição:
-Retorna a árvore completa de acessibilidade da tela atual.
+Descrição:Retorna a árvore completa de acessibilidade da tela atual.
+
 Resposta (exemplo simplificado):
 ```json
 {
@@ -106,6 +106,7 @@ children (lista de nós filhos)
 
 ### 1. FIND_TEXT
 Comando: FIND_TEXT <texto>
+
 Descrição: Procura o primeiro node cujo text ou content_desc contenha <texto> (case-insensitive).
 
 Resposta (encontrou):
