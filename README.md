@@ -107,7 +107,7 @@ children (lista de nós filhos)
 ### 1. FIND_TEXT
 Comando: FIND_TEXT <texto>
 Descrição: Procura o primeiro node cujo text ou content_desc contenha <texto> (case-insensitive).
-Resposta (encontrou):
+#Resposta (encontrou):
 ```json
 {
   "found": true,
@@ -127,7 +127,7 @@ Resposta (encontrou):
   }
 }
 ```
-Resposta (não encontrou):
+#Resposta (não encontrou):
 ```json
 {"found": false}
 ```
