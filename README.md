@@ -347,8 +347,77 @@ Quando os argumentos são inválidos (ex.: SWIPE com poucos parâmetros):
 {"ok": false, "error": "invalid_arguments"}
 ```
 
+### Voce pode achar o .apk no Realeses
 
+### Ou pode fazer seu propio build
+Requisitos para build
 
+Para compilar o APK deste projeto, é necessário:
+
+JDK 17 (ou compatível)
+
+Gradle wrapper já incluído no projeto (./gradlew)
+
+versão alvo usada: Gradle 8.7
+
+Android SDK instalado e configurado
+
+sdk.dir definido em local.properties na raiz do projeto, por exemplo:
+```properties
+sdk.dir=/home/seuusuario/android-sdk
+```
+Componentes do SDK (instalados via sdkmanager ou Android Studio):
+
+platforms;android-34
+
+build-tools;34.0.0 (ou versão equivalente suportada pelo projeto)
+
+platform-tools
+
+Configurações principais do módulo app (no build.gradle do módulo):
+
+compileSdk 34
+
+minSdk 24
+
+targetSdk 34
+
+Dependências principais:
+```gradle
+implementation "androidx.core:core-ktx:1.12.0"
+```
+Plugins usados:
+```gradle
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+```
+Obs.: ajuste versões de SDK / dependências conforme sua stack, se necessário.
+
+### Como compilar
+Na raiz do projeto:
+```bash
+./gradlew assembleDebug
+```
+O APK será gerado em:
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
+Instalação em um device / emulador / container Android:
+```bash
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+No Android (já em su): para ativar o servico e dar as permicoes
+```sh
+su
+
+SERVICE="com.chris.uix/.UixAccessibilityService"
+
+settings put secure enabled_accessibility_services "$SERVICE"
+settings put secure accessibility_enabled 1
+```
+### PROJETO DESENVOLVDO POR CHRISTIAN RACHID VALEZI (A.K.A) DJ CHRIS NO BEAT
 
 
 
