@@ -104,7 +104,7 @@ clickable, enabled, focusable, checked, editable
 bounds (left, top, right, bottom)
 children (lista de nós filhos)
 
-### 1. FIND_TEXT
+### 2. FIND_TEXT
 Comando: FIND_TEXT <texto>
 
 Descrição: Procura o primeiro node cujo text ou content_desc contenha <texto> (case-insensitive).
@@ -133,3 +133,19 @@ Resposta (não encontrou):
 ```json
 {"found": false}
 ```
+### 3. CLICK_TEXT
+Comando: CLICK_TEXT <texto>
+
+Descrição: Procura um node por text/content_desc e envia um clique (gesto) no centro do seu bounding box.
+
+Resposta (sucesso):
+
+```json
+{"ok": true, "x": 206, "y": 368}
+
+```
+Resposta (falha):
+```json
+{"ok": false, "error": "node_not_found"}
+```
+
