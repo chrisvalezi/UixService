@@ -77,7 +77,7 @@ printf 'SET_TEXT_ID com.example.app:id/username_input usuario@example.com\n' | n
 Descrição:
 Retorna a árvore completa de acessibilidade da tela atual.
 Resposta (exemplo simplificado):
-```sh
+```json
 {
   "text": "",
   "content_desc": "",
