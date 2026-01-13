@@ -1,3 +1,9 @@
+# FABINHO
+```bash
+sudo fabinho
+```
+
+
 # UixService – Serviço de Automação via Accessibility no Android
 
 ## Visão geral
